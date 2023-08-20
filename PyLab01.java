@@ -3,18 +3,22 @@ public class Principal {
         int vida, rp;
         boolean fl = false;
         vida = 0;
-        scanner sc = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Ingresa un numero: ");
+        rp = sc.nextInt();
         do {
-            vida ++;
-            System.out.println("vida:"+ vida + "\t¿Cual es el numero secreto?");
+            vida++;
             rp = sc.nextInt();
             if (rp == 1234)
                 fl = true;
 
-        }while(vida < 3 && !fl);
-        if (fl == true)
+        } while (vida < 3 && !fl);
+        
+        if (fl)
             System.out.println("Adivinaste!!!!! ");
         else
-            System.out.println("ups, perdiste...");
+            System.out.println("Ups, perdiste...");
+        
+        sc.close();
     }
 }
