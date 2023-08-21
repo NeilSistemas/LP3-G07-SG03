@@ -21,8 +21,15 @@ public class Principal {
         } while (vida < 3 && !fl);
         
         if (fl) {
+<<<<<<< HEAD
             System.out.println("¡Adivinaste el numero secreto!");
             System.out.println("Felicidades te ganaste un premio: Un pasaje al caribe ");
+=======
+            System.out.println("Felicidades adivinaste el numero secreto!");
+            String premio = Regalo.elegir(vida);
+            System.out.println("Ganaste en la "+vida+" oportunidad, por lo tanto te ganaste: "+premio);
+
+>>>>>>> rama2
         } else {
             System.out.println("Ups, perdiste. El número secreto era: " + num);
         }
