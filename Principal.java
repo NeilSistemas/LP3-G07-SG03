@@ -1,7 +1,9 @@
+import java.util.Scanner;
+
 public class Principal {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        System.out.print("Ingresa el número secreto: ");
+        System.out.print("Ingresa el numero secreto: ");
         int num = sc.nextInt();
         
         int vida, rp;
@@ -9,7 +11,7 @@ public class Principal {
         vida = 0;
         do {
             vida++;
-            System.out.println("Vida:" + vida + "\t¿Cuál es el número?");
+            System.out.println("Vida: " + vida + "\t¿Cuál es el numero?: ");
             rp = sc.nextInt();
             if (rp == num) {
                 fl = true;
@@ -19,9 +21,12 @@ public class Principal {
         } while (vida < 3 && !fl);
         
         if (fl) {
-            System.out.println("¡Adivinaste el número secreto!");
+            System.out.println("Felicidades adivinaste el numero secreto!");
+            String premio = Regalo.elegir(vida);
+            System.out.println("Ganaste en la "+vida+" oportunidad, por lo tanto te ganaste: "+premio);
+
         } else {
-            System.out.println("Ups, perdiste. El número secreto era: " + numeroSecreto);
+            System.out.println("Ups, perdiste. El número secreto era: " + num);
         }
         
         sc.close();
