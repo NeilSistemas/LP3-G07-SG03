@@ -1,0 +1,25 @@
+public class Manejador {
+    private int ancho;
+    private int alto;
+
+    public Manejador(int ancho, int alto) {
+        this.ancho = ancho;
+        this.alto = alto;
+    }
+
+    public int area() {
+        return ancho * alto;
+    }
+
+    public int perimetro() {
+        return 2 * (ancho + alto);
+    }
+
+    public void moverX(int cantidadPuntos) {
+        this.ancho += cantidadPuntos;
+    }
+
+    public void moverY(int cantidadPuntos) {
+        this.alto += cantidadPuntos;
+    }
+}
