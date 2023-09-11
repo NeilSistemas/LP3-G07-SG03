@@ -1,1 +1,52 @@
+import java.util.Scanner;
 
+public class Ventas {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        double[][] ventas = new double[5][4];
+
+        for (int vendedor = 0; vendedor < 4; vendedor++) {
+            for (int producto = 0; producto < 5; producto++) {
+                System.out.print("Ingrese las ventas del Vendedor " + (vendedor + 1) + " para el Producto " + (producto + 1) + ": $");
+                double venta = scanner.nextDouble();
+                ventas[producto][vendedor] = venta;
+            }
+        }
+
+        double[] totalPorVendedor = new double[4];
+        double[] totalPorProducto = new double[5];
+
+        for (int vendedor = 0; vendedor < 4; vendedor++) {
+            for (int producto = 0; producto < 5; producto++) {
+                totalPorVendedor[vendedor] += ventas[producto][vendedor];
+                totalPorProducto[producto] += ventas[producto][vendedor];
+            }
+        }
+
+        System.out.println("Ventas del último mes:");
+        System.out.println("Producto\tVendedor 1\tVendedor 2\tVendedor 3\tVendedor 4\tTotal Producto");
+
+        for (int producto = 0; producto < 5; producto++) {
+            System.out.print((producto + 1) + "\t\t");
+            for (int vendedor = 0; vendedor < 4; vendedor++) {
+                System.out.print(ventas[producto][vendedor] + "\t\t");
+            }
+            System.out.println(totalPorProducto[producto]);
+        }
+
+        System.out.print("Total Vendedor\t");
+        for (int vendedor = 0; vendedor < 4; vendedor++) {
+            System.out.print(totalPorVendedor[vendedor] + "\t\t");
+        }
+
+        double totalGeneral = 0;
+        for (double total : totalPorVendedor) {
+            totalGeneral += total;
+        }
+        System.out.println(totalGeneral);
+
+        scanner.close();
+    }
+}
