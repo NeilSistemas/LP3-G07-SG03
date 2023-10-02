@@ -1,0 +1,256 @@
+#ACTIVIDAD 1
+package Actividad1;
+public class TestComposicion {
+    public static void main(String[] args) {
+        Persona persona1 = new Persona(001,"Auron","Alvarez",1001,1500);
+        
+        persona1.getCuenta().setNumero(1001);
+        persona1.getCuenta().setSaldo(1500.0);
+        System.out.println( persona1.toString());
+    }
+}
+
+
+
+public class Persona{
+    private int id;
+    private String nombre;
+    private String apellido;
+    private Cuenta cuenta;
+    
+    public Persona(int id, String nombre, String apellido, int NumCu, double Saldo){
+        this.id = id;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.cuenta = new Cuenta(NumCu,Saldo);
+    }
+
+    public void setId(int Id){
+        this.id = Id;
+    }
+
+    public int getId(){
+        return this.id;
+    }
+
+    public void setNombre(String Nombre){
+        this.nombre = Nombre;
+    }
+
+    public String getNombre(){
+        return this.nombre;
+    }
+
+    public void setApellido(String Apellido){
+        this.apellido = Apellido;
+    }
+
+    public String getApellido(){
+        return "El apellido de la persona es: "+apellido;
+    }
+    
+    public Cuenta getCuenta(){
+        return this.cuenta;
+    }
+
+    @Override
+    public String toString() {
+        return "Persona{" + "id= " + id + ", nombre= " + nombre + ", apellido= " + apellido + ", cuenta= " + cuenta + '}';
+    }
+}
+
+
+
+public class Cuenta{
+    private int numero;
+    private double saldo;
+
+    public Cuenta(int numero, double saldo){
+        this.numero = numero;
+        this.saldo = saldo;
+    }
+    public Cuenta(int numero){
+        this(numero,0);
+    }
+
+    public int getNumero() {
+        return numero;
+    }
+
+    public void setNumero(int numero) {
+        this.numero = numero;
+    }
+
+    public double getSaldo() {
+        return saldo;
+    }
+
+    public void setSaldo(double saldo) {
+        this.saldo = saldo;
+    }
+
+    @Override
+    public String toString() {
+        return "Cuenta{" + "numero=" + numero + ", saldo=" + saldo + '}';
+    }
+}
+
+
+
+  
+#EJERCICIO 1
+package Ejercicio1;
+public class TestComposicion {
+    public static void main(String[] args) {
+        System.out.println("BIENVENIDO AL BANCO!\n");
+
+        Persona persona1 = new Persona(2023001,"Auron","Alvarez",'C',100);
+        Persona persona2 = new Persona(2023002,"Reborn","Alvarez",'B',500);
+        Persona persona3 = new Persona(2023003,"Axozer","Alain",'E',800);
+
+        System.out.println( persona1.toString());
+        System.out.println("-------------------------------------------");
+        System.out.println( persona2.toString());
+        System.out.println("-------------------------------------------");
+        System.out.println( persona3.toString());        
+    }    
+}
+
+
+
+public class Persona{
+    private int id;
+    private String nombre;
+    private String apellido;
+    private Cuenta cuenta;
+    
+    public Persona(int id, String nombre, String apellido, char TipoCliente, double Saldo){
+        this.id = id;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.cuenta = new Cuenta(TipoCliente,Saldo);
+    }
+    
+    public Persona(int id, String nombre, String apellido, double Saldo){
+        this.id = id;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.cuenta = new Cuenta(Saldo);
+    }
+
+    public void setId(int Id){
+        this.id = Id;
+    }
+
+    public int getId(){
+        return this.id;
+    }
+
+    public void setNombre(String Nombre){
+        this.nombre = Nombre;
+    }
+
+    public String getNombre(){
+        return this.nombre;
+    }
+
+    public void setApellido(String Apellido){
+        this.apellido = Apellido;
+    }
+
+    public String getApellido(){
+        return this.apellido;
+    }
+    
+    public Cuenta getCuenta(){
+        return this.cuenta;
+    }
+
+    @Override
+    public String toString() {
+        return "Cliente: " + id + "\nNombre: " + nombre + " " + apellido + "\n" + cuenta;
+    }
+}
+
+
+
+public class Cuenta{
+    private char tipoCliente;
+    private int numero;
+    private double saldo;
+
+    private static int TipoC = 1000;
+    private static int TipoB = 5000;
+    private static int TipoE = 8000;
+        
+    public Cuenta(char TipoCliente, double saldo){
+        setTipoCliente(TipoCliente);
+        setNumero(TipoCliente);
+        setSaldo(saldo);
+    }
+    
+    public Cuenta(double saldo){
+        this.tipoCliente = 'C'; 
+        setNumero(tipoCliente);
+        setSaldo(saldo);
+    }
+
+    public int getNumero() {
+        return numero;
+    }
+
+    public void setNumero(char TipoCliente) {
+        if(TipoCliente == 'C'){
+            this.numero += TipoC++;
+        }
+        else if (TipoCliente == 'B'){
+            this.numero += TipoB++;
+        }
+        else if (TipoCliente == 'E'){
+            this.numero += TipoE++;
+        } else {
+            System.out.println("Tipo de cliente no valido");
+        }
+    }
+
+    public double getSaldo() {
+        return saldo;
+    }
+
+    public void setSaldo(double saldo) {
+        if (saldo >= 50.0){
+            this.saldo = saldo;
+        } else {
+            System.out.println("El saldo minimo debe ser de 50 soles.");
+        }
+    }
+
+    public char getTipoCliente() {
+        return tipoCliente;
+    }
+
+    public void setTipoCliente(char TipoCliente) {
+        if (TipoCliente == 'C' || TipoCliente == 'B' || TipoCliente == 'E'){
+            this.tipoCliente = TipoCliente;
+        }
+    }
+    
+    public boolean retirar(double cantidad){
+        if(cantidad > 0 && saldo - cantidad >= 50.0){
+            saldo -= cantidad;
+            return true;
+        }
+        return false;
+    }
+    
+    public void depositar(double cantidad){
+        if(cantidad > 0){
+            saldo += cantidad;
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Tipo: " + tipoCliente + "\nNo. Cuenta: " + numero + ", Saldo: " + saldo + "\n";
+    }    
+}
