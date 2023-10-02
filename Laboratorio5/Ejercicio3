@@ -1,0 +1,107 @@
+import java.util.ArrayList;
+import java.util.List;
+
+class Cliente {
+    private String nombre;
+    private String tipoCuenta;
+
+    public Cliente(String nombre, String tipoCuenta) {
+        this.nombre = nombre;
+        this.tipoCuenta = tipoCuenta;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getTipoCuenta() {
+        return tipoCuenta;
+    }
+
+    @Override
+    public String toString() {
+        return "Cliente{" +
+                "nombre='" + nombre + '\'' +
+                ", tipoCuenta='" + tipoCuenta + '\'' +
+                '}';
+    }
+}
+
+class Banco {
+    private List<Cliente> clientes;
+
+    public Banco() {
+        clientes = new ArrayList<>();
+    }
+
+    public void agregarCliente(Cliente cliente) {
+        clientes.add(cliente);
+    }
+
+    public Cliente darBajaCliente(String nombreCliente) {
+        Cliente clienteEliminado = null;
+        for (int i = 0; i < clientes.size(); i++) {
+            if (clientes.get(i).getNombre().equalsIgnoreCase(nombreCliente)) {
+                clienteEliminado = clientes.remove(i);
+                if (!clientes.isEmpty()) {
+                    Cliente ultimoCliente = clientes.get(clientes.size() - 1);
+                    clientes.set(i, ultimoCliente);
+                }
+                break;
+            }
+        }
+        return clienteEliminado;
+    }
+
+    public List<Cliente> clientesTipo(String tipoCuenta) {
+        List<Cliente> clientesPorTipo = new ArrayList<>();
+        for (Cliente cliente : clientes) {
+            if (cliente.getTipoCuenta().equalsIgnoreCase(tipoCuenta)) {
+                clientesPorTipo.add(cliente);
+            }
+        }
+        return clientesPorTipo;
+    }
+
+    @Override
+    public String toString() {
+        return "Banco{" +
+                "clientes=" + clientes +
+                '}';
+    }
+}
+
+public class TestAsociacion {
+    public static void main(String[] args) {
+        Banco banco = new Banco();
+
+        Cliente cliente1 = new Cliente("Cliente1", "C");
+        Cliente cliente2 = new Cliente("Cliente2", "B");
+        Cliente cliente3 = new Cliente("Cliente3", "E");
+        Cliente cliente4 = new Cliente("Cliente4", "C");
+
+        banco.agregarCliente(cliente1);
+        banco.agregarCliente(cliente2);
+        banco.agregarCliente(cliente3);
+        banco.agregarCliente(cliente4);
+
+        System.out.println("Clientes en el banco:");
+        System.out.println(banco);
+
+        Cliente clienteEliminado = banco.darBajaCliente("Cliente2");
+        if (clienteEliminado != null) {
+            System.out.println("Cliente eliminado: " + clienteEliminado);
+        } else {
+            System.out.println("Cliente no encontrado.");
+        }
+
+        System.out.println("Clientes después de dar de baja:");
+        System.out.println(banco);
+
+        List<Cliente> clientesTipoC = banco.clientesTipo("C");
+        System.out.println("Clientes de tipo 'C':");
+        for (Cliente cliente : clientesTipoC) {
+            System.out.println(cliente);
+        }
+    }
+}
