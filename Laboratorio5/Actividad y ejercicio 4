@@ -1,0 +1,159 @@
+public class Asalariado {
+    
+    protected String nombre;
+    protected long dni;
+    protected String diasVacaciones;
+    protected double salarioBase;
+    
+    public Asalariado(String nombre, long dni, String diasVacaciones, double salarioBase){
+        
+        this.nombre = nombre;
+        this.dni = dni;
+        this.diasVacaciones = diasVacaciones;
+        this.salarioBase = salarioBase;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nuevo_nombre) {
+        this.nombre = nuevo_nombre;
+    }
+
+    public long getDni() {
+        return dni;
+    }
+
+    public void setDni(long nuevo_dni) {
+        this.dni = nuevo_dni;
+    }
+
+    public String getDiasVacaciones() {
+        return diasVacaciones;
+    }
+
+    public void setDiasVacaciones(String nuevo_diasVacaciones) {
+        this.diasVacaciones = nuevo_diasVacaciones;
+    }
+
+    public double getSalarioBase() {
+        return salarioBase;
+    }
+
+    public void setSalarioBase(double salarioBase) {
+        this.salarioBase = salarioBase;
+    }
+
+    @Override
+    public String toString() {
+        return "Empleado Asalariado\n" + 
+                "DNI        : " + dni + "\n" +
+                "nombre     : " + nombre + "\n" + 
+                "Vacaciones : " + diasVacaciones + "\n" +
+                "Salario    : " + calcularSalario();
+    }
+    
+    public double calcularSalario(){
+        
+        return salarioBase;
+    }
+}
+
+public class EmpleadoDistribucion extends Asalariado{
+    
+    private String region;
+    
+    public EmpleadoDistribucion(String nombre, long dni, String diasVacaciones, String region, double salarioBase){
+        
+        super(nombre, dni, diasVacaciones, salarioBase);
+        this.region = region;
+        
+    }
+
+    public String getRegion() {
+        return region;
+    }
+
+    public void setRegion(String nueva_region) {
+        this.region = nueva_region;
+    }
+
+    @Override
+    public String toString() {
+        return "EmpleadoDistribucion\n" +
+               "DNI        : " + dni + "\n" +
+               "nombre     : " + nombre + "\n" + 
+               "Vacaciones : " + diasVacaciones + "   " + "Zona : " + region + "\n" +
+               "Salario    : " + calcularSalario();
+    }
+    
+    
+    
+    @Override
+    public double calcularSalario(){
+        
+        return salarioBase = salarioBase * 1.10;
+    }
+}
+
+public class EmpleadoProduccion extends Asalariado{
+    
+    private String turno;
+    
+    public EmpleadoProduccion(String nombre, long dni, String diasVacaciones, String turno, double salarioBase){
+        
+        super(nombre, dni, diasVacaciones,salarioBase);
+        this.turno = turno;
+        
+    }
+
+    public String getTurno() {
+        return turno;
+    }
+
+    public void setTurno(String nuevo_turno) {
+        this.turno = nuevo_turno;
+    }
+
+    @Override
+    public String toString() {
+        return "EmpleadoProduccion\n" +                
+               "DNI        : " + dni + "\n" +
+               "nombre     : " + nombre + "\n" + 
+               "Vacaciones : " + diasVacaciones + "   " + "Turno : " + turno + "\n" +
+               "Salario    : " + calcularSalario();
+    }
+    
+    
+    
+    @Override
+    public double calcularSalario(){
+        
+        return salarioBase * 1.15;
+    }
+}
+
+public class Ejercicio4 {
+
+    public static void main(String[] args) {
+        
+        Asalariado emplead1 = new Asalariado("Manuel Cortina",12345678, "28 dias",1000);
+        EmpleadoProduccion emplead2 = new EmpleadoProduccion("Juan Mota", 55333222, "30 dias", "noche",1020);
+        EmpleadoDistribucion emplead3 = new EmpleadoDistribucion("Antonio Camino", 55333666, "35 dias", "Granada", 2000);
+         
+        System.out.println("El nombre de eemplead1 es " + emplead1.getNombre());
+        System.out.println("El nombre del emplead2 es " + emplead2.getNombre());
+        System.out.println("El turno del emplead2 es " + emplead2.getTurno());
+        System.out.println("El nombre del emplead3 es " + emplead3.getNombre());
+        System.out.println("La region del emplead3 es " + emplead3.getRegion());
+        System.out.println();
+        System.out.println("-----------------------");
+        System.out.println();        
+        System.out.println(emplead1);
+        System.out.println("-----------------------");
+        System.out.println(emplead2);
+        System.out.println("-----------------------");
+        System.out.println(emplead3);
+    }
+}
