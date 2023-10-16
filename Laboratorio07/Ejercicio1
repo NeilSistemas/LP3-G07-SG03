@@ -1,0 +1,169 @@
+public abstract class Figura {
+    public abstract String obtenerDescripcion();    
+}
+
+public abstract class FiguraBidimensional extends Figura {
+    public abstract double obtenerArea();
+}
+
+public class Circulo extends FiguraBidimensional {
+    private double radio;
+
+    public Circulo(double radio) {
+        this.radio = radio;
+    }
+
+    @Override
+    public double obtenerArea(){
+        return Math.PI * Math.pow(radio,2);
+    };
+    
+    @Override
+    public String obtenerDescripcion(){
+        return "Circulo con radio " + radio;
+    };
+}
+
+public class Cuadrado extends FiguraBidimensional {
+    private double lado;
+
+    public Cuadrado(double lado) {
+        this.lado = lado;
+    }
+    
+    @Override
+    public double obtenerArea(){
+        return lado * lado;
+    }
+    
+    @Override
+    public String obtenerDescripcion(){
+        return "Cuadrado con lado " + lado;
+    }
+}
+
+public class Triangulo extends FiguraBidimensional {
+    private double base;
+    private double altura;
+    
+    public Triangulo(double base, double altura){
+        this.base = base;
+        this.altura = altura;
+    }
+    
+    @Override
+    public double obtenerArea(){
+        return 0.5 * base * altura;
+    }
+    
+    @Override
+    public String obtenerDescripcion(){
+        return "Triangulo con base " + base + " y altura " + altura;
+    }
+}
+
+public abstract class FiguraTridimensional extends Figura {
+    public abstract double obtenerAreaSuperficial();
+    public abstract double obtenerVolumen();
+}
+
+public class Cubo extends FiguraTridimensional {
+    private double lado;
+
+    public Cubo(double lado){
+        this.lado = lado;
+    }
+    
+    @Override
+    public double obtenerAreaSuperficial(){
+        return 6 * Math.pow(lado, 2);
+    }
+    
+    @Override
+    public double obtenerVolumen(){
+        return Math.pow(lado,3);
+    }
+    
+    @Override
+    public String obtenerDescripcion(){
+        return "Cubo con lado " + lado;
+    }
+}
+
+public class Esfera extends FiguraTridimensional {
+    private double radio;
+    
+    public Esfera(double radio){
+        this.radio = radio;
+    }
+    
+    @Override
+    public double obtenerAreaSuperficial(){
+        return 4 * Math.PI * Math.pow(radio,2);
+    }
+    
+    @Override
+    public double obtenerVolumen(){
+        return (4.0 / 3) * Math.PI * Math.pow(radio, 3);
+    }
+    
+    @Override
+    public String obtenerDescripcion(){
+        return "Esfera con radio " + radio;
+    }
+}
+
+public class Tetraedro extends FiguraTridimensional{
+    private double arista;
+    
+    public Tetraedro(double arista){
+        this.arista = arista;
+    }
+    
+    @Override
+    public double obtenerAreaSuperficial(){
+        return Math.sqrt(3) * Math.pow(arista, 2);
+    }
+    
+    @Override
+    public double obtenerVolumen(){
+        return (Math.pow(arista,3)/(6 * Math.sqrt(2)));
+    }
+    
+    @Override
+    public String obtenerDescripcion(){
+        return "Tetraedro con arista " + arista;
+    }
+}
+
+
+
+public class ProgramaFiguras {
+    public static void main(String[] args) {
+        Figura[] figuras = new Figura[6];
+        
+        figuras[0] = new Circulo(5);
+        figuras[1] = new Cuadrado(4);
+        figuras[2] = new Triangulo(3, 4);
+        figuras[3] = new Esfera(3);
+        figuras[4] = new Cubo(2);
+        figuras[5] = new Tetraedro(4);
+
+        for (Figura figura : figuras) {
+            System.out.println(figura.obtenerDescripcion());
+
+            if (figura instanceof FiguraBidimensional) {
+                FiguraBidimensional figuraBidimensional = (FiguraBidimensional) figura;
+                System.out.println("Área: " + figuraBidimensional.obtenerArea());
+            }
+
+            if (figura instanceof FiguraTridimensional) {
+                FiguraTridimensional figuraTridimensional = (FiguraTridimensional) figura;
+                System.out.println("Área Superficial: " + figuraTridimensional.obtenerAreaSuperficial());
+                System.out.println("Volumen: " + figuraTridimensional.obtenerVolumen());
+            }
+
+            System.out.println();
+        }
+    }
+}
