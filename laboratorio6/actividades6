@@ -1,0 +1,153 @@
+public abstract class Empleado implements PorPagar{
+    
+    private String primerNombre;
+    private String apellidoPaterno;
+    private String numeroSeguroSocial;
+    
+    public Empleado(String nombre, String apellido, String nss){
+        primerNombre = nombre;
+        apellidoPaterno=apellido;
+        numeroSeguroSocial= nss;
+    }
+
+    @Override
+    public String toString() {
+        return "Empleado asalariado: " + primerNombre + " " + apellidoPaterno + "\n" + 
+                "numero de seguro social: " + numeroSeguroSocial;
+    }
+    
+}
+public class EmpleadoAsalariado extends Empleado{
+    
+    private double salarioSemanal;
+
+    public EmpleadoAsalariado(String nombre, String apellido, String nss, double salario) {
+        super(nombre, apellido, nss);
+        establecerSalarioSemanal(salario);
+    }
+    
+    public void establecerSalarioSemanal(double salario){
+        this.salarioSemanal = salario;
+    }
+    
+    public double obtenerSalarioSemanal(){
+        return salarioSemanal;
+    }
+    
+   @Override
+   public double obtenerMontoPago(){
+       return obtenerSalarioSemanal();
+   }
+
+    @Override
+    public String toString() {
+        return super.toString() + "\n" +
+                "salario semanal: " + salarioSemanal;
+    }
+   
+}
+public class Factura implements PorPagar{
+    
+    private String numeroPieza;
+    private String descripcionPieza;
+    private int cantidad;
+    private double precioPorArticulo;
+    
+    public Factura(String pieza, String descripcion, int cuenta, double precio){
+        
+        numeroPieza = pieza;
+        descripcionPieza = descripcion;
+        establecerCantidad(cuenta);
+        establecerPrecioPorArticulo(precio);
+    }
+    public void establecerCantidad(int cuenta) {
+        this.cantidad = cuenta;
+    }
+     public void establecerPrecioPorArticulo(double precio){
+         this.precioPorArticulo = precio;
+     }
+    
+    @Override
+    public double obtenerMontoPago(){
+        return obtenerCantidad() * obtenerPrecioPorArticulo();
+    }
+    
+    public double obtenerCantidad() {
+        return cantidad;
+    }
+    
+    public double obtenerPrecioPorArticulo() {
+        return precioPorArticulo;
+    }
+
+    @Override
+    public String toString() {
+        return "numeroPieza: " + numeroPieza + " " + "(" + descripcionPieza + ")" + "\n" +
+                "cantidad: " + cantidad + "\n" +
+                "precioPorArticulo: " + precioPorArticulo;
+    }
+}
+public interface PorPagar {
+    
+    double obtenerMontoPago();
+    
+}
+public class Prestamo implements PorPagar{
+    
+    private int numeroDeCuotas;
+    private double montoDeCuota;
+
+    public Prestamo(int numeroDeCuotas, double montoDeCuota) {
+        this.numeroDeCuotas = numeroDeCuotas;
+        this.montoDeCuota = montoDeCuota;
+    }
+
+    public double getNumeroDeCuotas() {
+        return numeroDeCuotas;
+    }
+
+    public void setNumeroDeCuotas(int numeroDeCuotas) {
+        this.numeroDeCuotas = numeroDeCuotas;
+    }
+
+    public double getMontoDeCuota() {
+        return montoDeCuota;
+    }
+
+    public void setMontoDeCuota(double montoDeCuota) {
+        this.montoDeCuota = montoDeCuota;
+    }
+
+    @Override
+    public String toString() {
+        return "numero de cuotas: " + numeroDeCuotas + "\n" +
+                "monto de cuota: " + montoDeCuota;
+    }
+    
+    @Override
+    public double obtenerMontoPago(){
+        return numeroDeCuotas * montoDeCuota;
+    }
+}
+public class PruebaInterfasPorPagar {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        PorPagar[] objetosPorPagar = new PorPagar[6];
+        
+        objetosPorPagar[0] = new Factura("01234", "asiento", 2, 375.00);
+        objetosPorPagar[1] = new Factura("56789", "llanta", 4, 79.95);
+        objetosPorPagar[2] = new EmpleadoAsalariado("John", "Smith", "111-11-1111", 800.00);
+        objetosPorPagar[3] = new EmpleadoAsalariado("Lisa", "Barnes", "888-88-8888", 1200.00);
+        objetosPorPagar[4] = new Prestamo(4, 500);
+        objetosPorPagar[5] = new Prestamo(3, 200);
+        
+        System.out.println("Facturas y Empleados procesados en forma polimorfica:\n");
+        
+        for(PorPagar porPagarActual : objetosPorPagar){
+            System.out.printf("%s \n%s: $%,.2f\n\n", porPagarActual.toString(), "pago vencido", porPagarActual.obtenerMontoPago());
+        }
+    }    
+}
